@@ -109,6 +109,9 @@ sub leet {
                                 $valid = 3;
                             }
                         }
+                        
+                        # Statistic over number of spaces
+                        $msg = length($msg);
                     } else {
                         # Invalid because of text in 13:37
                         $valid = 2;   
@@ -119,9 +122,6 @@ sub leet {
             # Message is valid
             if ($valid == 0)
             {
-                # Statistic over number of spaces
-                $msg = length($msg);
-                
                 # Add user to list of entries
                 push(@users, $nick);
             }
