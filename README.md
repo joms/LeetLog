@@ -27,7 +27,8 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
     2 = Text in 13:37
     3 = Already entered
     4 = After 13:37
-
+    5 = Empty string before 13:37
+    6 = Empty string after 13:37
 **Example**
 
 	03-07-2014 13:36:05:417 1 JoMs Tulljballj
