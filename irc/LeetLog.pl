@@ -87,13 +87,12 @@ sub leet {
             # Invalid as it's before :37
             $valid = 1;
         } else {
-            # Check if it's after :37
-            if strftime("%M", localtime($t)) > 37)
+            # Check if it's after 37
+            if (strftime("%M", localtime($t)) > 37)
             {
                 # Invalid as it's after :37
                 $valid = 4;  
-            } else { #Time is inside :37-scope
-               
+            } else { 
                 # Check if string is empty
                 if ($msg =~ /(?i)^\s*$/)
                 {
