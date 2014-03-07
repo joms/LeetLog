@@ -12,7 +12,9 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
     - Too early (before 13:37:00)
     - Too late (after 13:37:59)
     - Multiple entries inside 13:37. Only the first entry will count
-    Timestamp with time down to milliseconds
+    Date (dd-mm-yyyy)
+    Time (hh:mm:ss)
+    Milliseconds
     Nick
     Message
     - If not empty, this is what the user posted
@@ -20,8 +22,12 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
 
 **Example**
 
-    2014-03-06 13:37:01.124 valid JoMs 1
-    2014-03-06 13:37:59.214 invalid JoMs google
+    2014-03-06 13:37:01 124 valid JoMs 1
+    2014-03-06 13:37:59 214 invalid JoMs google
+    
+**GROK**
+
+    %{DATE_EU:date} %{TIME:time} %{WORD:status} %{USERNAME:nick} %{GREEDYDATA:msg}
 
 ---
 
