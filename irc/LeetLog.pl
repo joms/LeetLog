@@ -80,28 +80,47 @@ sub leet {
     {
         my $valid = 0;
         
-        # Check if string is empty
-        if ($msg =~ /(?i)^\s*$/)
+        
+        # Check if it's before :37
+        if (strftime("%M", localtime($t)) < 37)
         {
-            # Check if user has already made an entry
-            foreach my $u (@users)
+            # Invalid as it's before :37
+            $valid = 1;
+        } else {
+            # Check if it's after :37
+            if strftime("%M", localtime($t)) > 37)
             {
-                if ($u eq $nick)
+                # Invalid as it's after :37
+                $valid = 4;  
+            } else { #Time is inside :37-scope
+               
+                # Check if string is empty
+                if ($msg =~ /(?i)^\s*$/)
                 {
-                    # Invalid because user has made an entry
-                    $valid = 3;
+                    
+                    # Check if user has already made an entry
+                    foreach my $u (@users)
+                    {
+                        if ($u eq $nick)
+                        {
+                            # Invalid because user already has made an entry
+                            $valid = 3;
+                        }
+                    }
+                } else {
+                    # Invalid because of text in 13:37
+                    $valid = 2;   
                 }
             }
-
-        } else {
-            # Invalid because of text in 13:37
-            $valid = 2;   
         }
         
+        # Message is valid
         if ($valid == 0)
         {
+            # Statistic over number of spaces
             $msg = length($msg);
             
+            # Add user to list of entries
             push(@users, $nick);
         }
         
