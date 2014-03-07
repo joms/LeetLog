@@ -57,6 +57,8 @@ my @users;
         2 = Text in 13:37
         3 = Already entered
         4 = After 13:37
+        5 = Empty string before 13:37
+        6 = Empty string after 13:37
 =cut
 
 # Write to log
@@ -87,19 +89,30 @@ sub leet {
             # Check if it's before :37
             if (strftime("%M", localtime($t)) < 37)
             {
-                # Invalid as it's before :37
-                $valid = 1;
+                if ($msg =~ /(?i)^\s*$/)
+                {
+                    $msg = length($msg);
+                    $valid = 5;
+                } else {
+                    # Invalid as it's before :37
+                    $valid = 1;
+                }
             } else {
                 # Check if it's after 37
                 if (strftime("%M", localtime($t)) > 37)
                 {
-                    # Invalid as it's after :37
-                    $valid = 4;  
+                    if ($msg =~ /(?i)^\s*$/)
+                    {
+                        $msg = length($msg);
+                        $valid = 6;
+                    } else {
+                        # Invalid as it's after :37
+                        $valid = 4;  
+                    }
                 } else { 
                     # Check if string is empty
                     if ($msg =~ /(?i)^\s*$/)
                     {
-                        
                         # Check if user has already made an entry
                         foreach my $u (@users)
                         {
