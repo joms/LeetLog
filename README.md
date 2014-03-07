@@ -8,7 +8,7 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
 
 **Log format**
 
-    invalid/valid. A post will be invalid if it triggers any of the follow rules (Could be changed to an int for reason)
+    invalid/valid. A post will be invalid if it triggers any of the follow rules (Could be changed to an representing a reason)
     - Too early (before 13:37:00)
     - Too late (after 13:37:59)
     - Multiple entries inside 13:37. Only the first entry will count
