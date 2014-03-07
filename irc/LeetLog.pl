@@ -50,9 +50,9 @@ sub otherleet {
 sub leet {
     my ($nick, $msg) = @_;
     
-    my ($x,$y)=gettimeofday;
-    my $yy=sprintf("%03d",$y/1000);
-    my $time = strftime("%Y-%m-%d %H:%M:%S",localtime($x)).".$yy";
+    my ($t, $tt)=gettimeofday;
+    my $ms=sprintf("%03d",$tt/1000);
+	my $time = strftime("%m-%d-%Y %H:%M:%S",localtime($t)) . ":$ms";
     
     # Check if logfile is defined. If yes - execute
     if (Irssi::settings_get_str("LeetLog_file"))
