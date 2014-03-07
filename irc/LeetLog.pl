@@ -46,26 +46,62 @@ sub otherleet {
     leet($nick, $msg);
 }
 
+=po
+    Valid/Invalid reasons:
+        0 = Valid
+        1 = Before 13:37
+        2 = Text in 13:37
+        3 = Already entered
+        4 = After 13:37
+=cut
+
+##Insert array and function for handling multiple entries here
+my $lastround = "";
+my @users;
+
+
 # Write to log
 sub leet {
     my ($nick, $msg) = @_;
     
     my ($t, $tt)=gettimeofday;
     my $ms=sprintf("%03d",$tt/1000);
-	my $time = strftime("%m-%d-%Y %H:%M:%S",localtime($t)) . ":$ms";
+    my $date = strftime("%m-%d-%Y",localtime($t));
+	my $time = strftime("%H:%M:%S",localtime($t)) . ":$ms";
+	
+	if ($lastround ne $date)
+	{
+	    @users=();
+	    $lastround = $date;
+	}
     
     # Check if logfile is defined. If yes - execute
     if (Irssi::settings_get_str("LeetLog_file"))
     {
-        my $valid = "invalid";
+        my $valid = 0;
         
         if ($msg =~ /(?i)^\s*$/)
         {
-            $valid = "valid";
-            $msg = length($msg);
+            my $invalid = 0;
+            foreach my $u (@users)
+            {
+                if ($u eq $nick)
+                {
+                    $valid = 3;
+                    $invalid = 1;
+                }
+            }
+            
+            if ($invalid == 0)
+            {
+                $valid = 0;
+                $msg = length($msg);
+                
+                push(@users, $nick);
+            }
         }
         
-        my $log = $time ." ". $valid ." ". $nick ." ". $msg ."\n";
+        my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
         
         #Open file and write info to it
         open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
@@ -75,9 +111,6 @@ sub leet {
         Irssi::print($filedir_not_set);
     }
 }
-
-##Insert array and function for handling multiple entries here
-
 
 
 # Signals needed, and their function calls
