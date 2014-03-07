@@ -80,25 +80,29 @@ sub leet {
     {
         my $valid = 0;
         
+        # Check if string is empty
         if ($msg =~ /(?i)^\s*$/)
         {
-            my $invalid = 0;
+            # Check if user has already made an entry
             foreach my $u (@users)
             {
                 if ($u eq $nick)
                 {
+                    # Invalid because user has made an entry
                     $valid = 3;
-                    $invalid = 1;
                 }
             }
+
+        } else {
+            # Invalid because of text in 13:37
+            $valid = 2;   
+        }
+        
+        if ($valid == 0)
+        {
+            $msg = length($msg);
             
-            if ($invalid == 0)
-            {
-                $valid = 0;
-                $msg = length($msg);
-                
-                push(@users, $nick);
-            }
+            push(@users, $nick);
         }
         
         my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
