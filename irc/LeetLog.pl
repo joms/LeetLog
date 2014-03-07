@@ -68,71 +68,75 @@ sub leet {
     my $date = strftime("%m-%d-%Y",localtime($t));
 	my $time = strftime("%H:%M:%S",localtime($t)) . ":$ms";
 	
-	if ($lastround ne $date)
+	# Check if time is within 13:35 and 13:40
+	if (strftime("%H", localtime($t)) == 13 && strftime("%M", localtime($t)) >= 35 && strftime("%M", localtime($t)) <= 40)
 	{
-	    @users=();
-	    $lastround = $date;
-	}
-    
-    # Check if logfile is defined. If yes - execute
-    if (Irssi::settings_get_str("LeetLog_file"))
-    {
-        my $valid = 0;
+	    # Check if it's a new day, reset the userlist if it is
+    	if ($lastround ne $date)
+    	{
+    	    @users=();
+    	    $lastround = $date;
+    	}
         
-        
-        # Check if it's before :37
-        if (strftime("%M", localtime($t)) < 37)
+        # Check if logfile is defined. If yes - execute
+        if (Irssi::settings_get_str("LeetLog_file"))
         {
-            # Invalid as it's before :37
-            $valid = 1;
-        } else {
-            # Check if it's after 37
-            if (strftime("%M", localtime($t)) > 37)
+            # Define the valid variable
+            my $valid = 0;
+            
+            # Check if it's before :37
+            if (strftime("%M", localtime($t)) < 37)
             {
-                # Invalid as it's after :37
-                $valid = 4;  
-            } else { 
-                # Check if string is empty
-                if ($msg =~ /(?i)^\s*$/)
+                # Invalid as it's before :37
+                $valid = 1;
+            } else {
+                # Check if it's after 37
+                if (strftime("%M", localtime($t)) > 37)
                 {
-                    
-                    # Check if user has already made an entry
-                    foreach my $u (@users)
+                    # Invalid as it's after :37
+                    $valid = 4;  
+                } else { 
+                    # Check if string is empty
+                    if ($msg =~ /(?i)^\s*$/)
                     {
-                        if ($u eq $nick)
+                        
+                        # Check if user has already made an entry
+                        foreach my $u (@users)
                         {
-                            # Invalid because user already has made an entry
-                            $valid = 3;
+                            if ($u eq $nick)
+                            {
+                                # Invalid because user already has made an entry
+                                $valid = 3;
+                            }
                         }
+                    } else {
+                        # Invalid because of text in 13:37
+                        $valid = 2;   
                     }
-                } else {
-                    # Invalid because of text in 13:37
-                    $valid = 2;   
                 }
             }
-        }
-        
-        # Message is valid
-        if ($valid == 0)
-        {
-            # Statistic over number of spaces
-            $msg = length($msg);
             
-            # Add user to list of entries
-            push(@users, $nick);
+            # Message is valid
+            if ($valid == 0)
+            {
+                # Statistic over number of spaces
+                $msg = length($msg);
+                
+                # Add user to list of entries
+                push(@users, $nick);
+            }
+            
+            my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
+            
+            #Open file and write info to it
+            open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
+            print $fh $log;
+            close $fh;
+        } else {
+            Irssi::print($filedir_not_set);
         }
-        
-        my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
-        
-        #Open file and write info to it
-        open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
-        print $fh $log;
-        close $fh;
-    } else {
-        Irssi::print($filedir_not_set);
-    }
+	}
 }
-
 
 # Signals needed, and their function calls
 Irssi::signal_add("message public", "otherleet");
