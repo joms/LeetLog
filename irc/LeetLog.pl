@@ -46,7 +46,7 @@ sub otherleet {
     leet($nick, $msg);
 }
 
-##Insert array and function for handling multiple entries here
+# Variable for saving the date of the last round, and users that has posted today
 my $lastround = "";
 my @users;
 
