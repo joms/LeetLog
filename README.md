@@ -30,4 +30,4 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
 
 ---
 
-The statistics will be made by runnin the log through Logstash and into ElasticSearch, wich then serves as an API for the website.
+The statistics will be made by running the log through Logstash and into ElasticSearch, wich then serves as an API for the website.
