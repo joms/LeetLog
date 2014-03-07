@@ -13,20 +13,32 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
     - Too late (after 13:37:59)
     - Multiple entries inside 13:37. Only the first entry will count
     Date (dd-mm-yyyy)
-	Time (hh:mm:ss:ms)
+    Time (hh:mm:ss:ms)
     Nick
     Message
     - If not empty, this is what the user posted
     - If only spaces, this is the number of spaces
 
+**Status**
+
+    Valid/Invalid reasons:
+    0 = Valid
+    1 = Before 13:37
+    2 = Text in 13:37
+    3 = Already entered
+    4 = After 13:37
+
 **Example**
 
-	2014-03-06 13:37:01:124 valid JoMs 1
-	2014-03-06 13:37:59:214 invalid JoMs google
+	03-07-2014 13:36:05:417 1 JoMs Tulljballj
+	03-07-2014 13:37:02:143 0 JoMs 1
+	03-07-2014 13:37:39:942 3 JoMs  
+	03-07-2014 13:37:43:532 2 JoMs Tisse tass, kliss klass
+	03-07-2014 13:38:05:214 4 JoMs Pen runde
     
 **GROK**
 
-    %{DATE_EU:date} %{TIME:time} %{WORD:status} %{USERNAME:nick} %{GREEDYDATA:msg}
+    %{DATE_EU:date} %{TIME:time} %{INT:status} %{USERNAME:nick} %{GREEDYDATA:msg}
 
 ---
 
