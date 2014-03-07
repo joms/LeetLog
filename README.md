@@ -22,3 +22,7 @@ This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty)
 
     2014-03-06 13:37:01.124 valid JoMs 1
     2014-03-06 13:37:59.214 invalid JoMs google
+
+---
+
+The statistics will be made by runnin the log through Logstash and into ElasticSearch, wich then serves as an API for the website.
