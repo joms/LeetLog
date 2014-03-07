@@ -46,6 +46,10 @@ sub otherleet {
     leet($nick, $msg);
 }
 
+##Insert array and function for handling multiple entries here
+my $lastround = "";
+my @users;
+
 =po
     Valid/Invalid reasons:
         0 = Valid
@@ -54,11 +58,6 @@ sub otherleet {
         3 = Already entered
         4 = After 13:37
 =cut
-
-##Insert array and function for handling multiple entries here
-my $lastround = "";
-my @users;
-
 
 # Write to log
 sub leet {
