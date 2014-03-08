@@ -69,8 +69,8 @@ sub leet {
     
     my ($t, $tt)=gettimeofday;
     my $ms=sprintf("%03d",$tt/1000);
-    my $date = strftime("%m-%d-%Y",localtime($t));
-	my $time = strftime("%H:%M:%S",localtime($t)) . ":$ms";
+    my $date = strftime("%d-%m-%Y",localtime($t));
+	my $time = strftime("%H:%M:%S",localtime($t)) . ".$ms";
 	
 	#Check if channel is #scene.no
 	if ($chan eq "#Scene.no")
