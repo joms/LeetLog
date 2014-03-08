@@ -10,9 +10,9 @@ use Time::HiRes 'gettimeofday';
  
 $VERSION = "0.1";
 %IRSSI = (
-  authors       => 	"Jo Emil Holen - JoMs",
-	name        => 	"LeetLog",
-	description => 	"Logger for #scene.no at 13:37",
+    authors     => 	"Jo Emil Holen - JoMs",
+    name        => 	"LeetLog",
+    description => 	"Logger for #scene.no at 13:37",
     license     => 	"GPLv2"
 );
 
@@ -25,25 +25,27 @@ $VERSION = "0.1";
     * Multiple entries
     Timestamp with time down to milliseconds
     Nick
+    Message or number of spaces
 =cut
 
+# Define setting(s)
 Irssi::settings_add_str($IRSSI{"name"}, "LeetLog_file", "");
 
 # Error messages
-my $filedir_not_set = "Filedirectory is not defined - /set LeetLog_file";
+my $error_filedir_not_set = "Filedirectory is not defined - /set LeetLog_file";
 
 # Used when I leet
 sub myleet {
     my ($server, $msg, $target) = @_;
     
-    leet($server->{nick}, $msg);
+    leet($server->{nick}, $msg, $target);
 }
 
 # Used when others leet
 sub otherleet {
     my ($server, $msg, $nick, $address, $target) = @_;
     
-    leet($nick, $msg);
+    leet($nick, $msg, $target);
 }
 
 # Variable for saving the date of the last round, and users that has posted today
@@ -63,91 +65,102 @@ my @users;
 
 # Write to log
 sub leet {
-    my ($nick, $msg) = @_;
+    my ($nick, $msg, $chan) = @_;
     
     my ($t, $tt)=gettimeofday;
     my $ms=sprintf("%03d",$tt/1000);
     my $date = strftime("%m-%d-%Y",localtime($t));
 	my $time = strftime("%H:%M:%S",localtime($t)) . ":$ms";
 	
-	# Check if time is within 13:35 and 13:40
-	if (strftime("%H", localtime($t)) == 13 && strftime("%M", localtime($t)) >= 35 && strftime("%M", localtime($t)) <= 40)
+	#Check if channel is #scene.no
+	if ($chan eq "#Scene.no")
 	{
-	    # Check if it's a new day, reset the userlist if it is
-    	if ($lastround ne $date)
+    	# Check if time is within 13:35 and 13:40
+    	if (strftime("%H", localtime($t)) == 13 && strftime("%M", localtime($t)) >= 35 && strftime("%M", localtime($t)) <= 40)
     	{
-    	    @users=();
-    	    $lastround = $date;
-    	}
-        
-        # Check if logfile is defined. If yes - execute
-        if (Irssi::settings_get_str("LeetLog_file"))
-        {
-            # Define the valid variable
-            my $valid = 0;
+    	    # Check if it's a new day, reset the userlist if it is
+        	if ($lastround ne $date)
+        	{
+        	    @users=();
+        	    $lastround = $date;
+        	}
             
-            # Check if it's before :37
-            if (strftime("%M", localtime($t)) < 37)
+            # Check if logfile is defined. If yes - execute
+            if (Irssi::settings_get_str("LeetLog_file"))
             {
-                if ($msg =~ /(?i)^\s*$/)
+                # Define the valid variable
+                my $valid = 0;
+                
+                # Check if it's before :37
+                if (strftime("%M", localtime($t)) < 37)
                 {
-                    $msg = length($msg);
-                    $valid = 5;
-                } else {
-                    # Invalid as it's before :37
-                    $valid = 1;
-                }
-            } else {
-                # Check if it's after 37
-                if (strftime("%M", localtime($t)) > 37)
-                {
+                    # Check if string is empty, for miss
                     if ($msg =~ /(?i)^\s*$/)
                     {
-                        $msg = length($msg);
-                        $valid = 6;
-                    } else {
-                        # Invalid as it's after :37
-                        $valid = 4;  
-                    }
-                } else { 
-                    # Check if string is empty
-                    if ($msg =~ /(?i)^\s*$/)
-                    {
-                        # Check if user has already made an entry
-                        foreach my $u (@users)
-                        {
-                            if ($u eq $nick)
-                            {
-                                # Invalid because user already has made an entry
-                                $valid = 3;
-                            }
-                        }
-                        
                         # Statistic over number of spaces
                         $msg = length($msg);
+                        # Invalid because of miss
+                        $valid = 5;
                     } else {
-                        # Invalid because of text in 13:37
-                        $valid = 2;   
+                        # Invalid as it's before :37
+                        $valid = 1;
+                    }
+                } else {
+                    # Check if it's after 37
+                    if (strftime("%M", localtime($t)) > 37)
+                    {
+                        # Check if string is empty, for miss
+                        if ($msg =~ /(?i)^\s*$/)
+                        {
+                            # Statistic over number of spaces
+                            $msg = length($msg);
+                            # Invalid because of miss
+                            $valid = 6;
+                        } else {
+                            # Invalid as it's after :37
+                            $valid = 4;  
+                        }
+                    } else { 
+                        # Check if string is empty
+                        if ($msg =~ /(?i)^\s*$/)
+                        {
+                            # Check if user has already made an entry
+                            foreach my $u (@users)
+                            {
+                                if ($u eq $nick)
+                                {
+                                    # Invalid because user already has made an entry
+                                    $valid = 3;
+                                }
+                            }
+                            
+                            # Statistic over number of spaces
+                            $msg = length($msg);
+                        } else {
+                            # Invalid because of text in 13:37
+                            $valid = 2;   
+                        }
                     }
                 }
+                
+                # Message is valid
+                if ($valid == 0)
+                {
+                    # Add user to list of entries
+                    push(@users, $nick);
+                }
+                
+                #Construct logline
+                my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
+                
+                #Open file and write info to it
+                open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
+                print $fh $log;
+                close $fh;
+            } else {
+                Irssi::print($error_filedir_not_set);
             }
-            
-            # Message is valid
-            if ($valid == 0)
-            {
-                # Add user to list of entries
-                push(@users, $nick);
-            }
-            
-            my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
-            
-            #Open file and write info to it
-            open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
-            print $fh $log;
-            close $fh;
-        } else {
-            Irssi::print($filedir_not_set);
-        }
+    	}
 	}
 }
 
@@ -158,5 +171,5 @@ Irssi::signal_add("message own_public", "myleet");
 # Checking settings
 if (!Irssi::settings_get_str("LeetLog_file"))
 {
-    Irssi::print($filedir_not_set);
+    Irssi::print($error_filedir_not_set);
 }
