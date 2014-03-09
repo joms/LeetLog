@@ -70,11 +70,11 @@ sub leet {
     my ($t, $tt)=gettimeofday;
     my $ms=sprintf("%03d",$tt/1000);
     my $date = strftime("%d-%m-%Y",localtime($t));
-	my $time = strftime("%H:%M:%S",localtime($t)) . ".$ms";
+    my $time = strftime("%H:%M:%S",localtime($t)) . ".$ms";
 	
-	#Check if channel is #scene.no
-	if ($chan eq "#Scene.no")
-	{
+    #Check if channel is #scene.no
+    if ($chan eq "#Scene.no")
+    {
     	# Check if time is within 13:35 and 13:40
     	if (strftime("%H", localtime($t)) == 13 && strftime("%M", localtime($t)) >= 35 && strftime("%M", localtime($t)) <= 40)
     	{
@@ -161,7 +161,7 @@ sub leet {
                 Irssi::print($error_filedir_not_set);
             }
     	}
-	}
+    }
 }
 
 # Signals needed, and their function calls
