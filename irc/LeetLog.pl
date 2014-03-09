@@ -73,7 +73,7 @@ sub leet {
     my $time = strftime("%H:%M:%S",localtime($t)) . ".$ms";
 	
     #Check if channel is #scene.no
-    if ($chan eq "#Scene.no")
+    if ($chan eq "#scene.no")
     {
     	# Check if time is within 13:35 and 13:40
     	if (strftime("%H", localtime($t)) == 13 && strftime("%M", localtime($t)) >= 35 && strftime("%M", localtime($t)) <= 40)
