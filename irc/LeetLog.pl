@@ -69,7 +69,7 @@ sub leet {
     
     my ($t, $tt)=gettimeofday;
     my $ms=sprintf("%03d",$tt/1000);
-    my $date = strftime("%d-%m-%Y",localtime($t));
+    my $date = strftime("%m/%d/%Y",localtime($t));
     my $time = strftime("%H:%M:%S",localtime($t)) . ".$ms";
 	
     #Check if channel is #scene.no
@@ -151,7 +151,7 @@ sub leet {
                 }
                 
                 #Construct logline
-                my $log = $date ." ". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
+                my $log = $date ."-". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
                 
                 #Open file and write info to it
                 open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
