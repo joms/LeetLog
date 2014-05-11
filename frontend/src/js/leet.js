@@ -11,6 +11,8 @@ function GetData(day)
     var date = new Date();
     if (day)
     {
+        date = new Date(day.id);
+
         console.log(day);
         $('.dropdown-toggle').text($(day).text());
     }
