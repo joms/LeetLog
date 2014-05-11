@@ -1,0 +1,34 @@
+{
+    "name": "LeetLog-Frontend",
+    "preferGlobal": true,
+    "author": "Jo Emil Holen",
+    "description": "Frontend for the LeetLog utility",
+    "contributors": [
+        "Jo Emil Holen <jo-emil@zoodo.no>"
+    ],
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/joms/LeetLog.git"
+    },
+
+    "dependencies": {
+        "grunt": "~0.4.2",
+        "grunt-contrib-clean": "*",
+        "grunt-contrib-compress": "*",
+        "grunt-contrib-copy": "*",
+        "grunt-contrib-less": "*",
+        "grunt-text-replace": "*"
+    },
+
+    "bugs": {
+        "url": "https://github.com/joms/LeetLog/issues"
+    },
+
+    "homepage": "https://github.com/joms/LeetLog",
+    "version": "0.0.1",
+    "main": "Gruntfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
+}
