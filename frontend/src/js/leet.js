@@ -33,30 +33,16 @@ function GetData(day)
                 "filtered": {
                     "query": {
                         "bool": {
-                            "should": [
+                            "must": [
                                 {
-                                    "query_string": {
-                                        "query": "_type=0"
-                                    }
-                                },
-                                {
-                                    "query_string": {
-                                        "query": "_type=2"
-                                    }
-                                },
-                                {
-                                    "query_string": {
-                                        "query": "_type=3"
-                                    }
-                                },
-                                {
-                                    "query_string": {
-                                        "query": "_type=5"
-                                    }
-                                },
-                                {
-                                    "query_string": {
-                                        "query": "_type=6"
+                                    "terms": {
+                                        "_type": [
+                                            "0",
+                                            "2",
+                                            "3",
+                                            "5",
+                                            "6"
+                                        ]
                                     }
                                 }
                             ]
