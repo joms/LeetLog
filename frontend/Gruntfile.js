@@ -91,5 +91,13 @@ module.exports = function(grunt) {
     });
 
     // Runs all tasks needed for a build
-    grunt.registerTask('build', 'Buildtask', ['clean', 'copy', 'less', 'replace:less', 'replace:consolelog']);
+    grunt.registerTask('build', 'Buildtask', // Task title and description
+        [
+            'clean',                // Cleans build-folder
+            'copy',                 // Copies content of src to build
+            'less',                 // Compiles all LESS-files to CSS
+            'replace:less',         // Replaces all LESS references with CSS references
+            'replace:consolelog'    // Removes all console.log() calls
+        ]
+    );
 };
