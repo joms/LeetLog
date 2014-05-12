@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         replace: {
             // Replaces less-related content in php-files with css paths
             less: {
-                src: ['build/**/*.php'],
+                src: ['build/**/*.html'],
                 overwrite: true,
                 replacements: [
                     {
