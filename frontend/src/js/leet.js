@@ -91,13 +91,13 @@ function AddScore(d)
             var miss = "";
             if (date.getMinutes() < 37)
             {
-                miss = "-"+date.getHours()+"."+date.getMinutes()+".";
-                str = str.substr(0, str.length - 4);
+                miss = "- "+date.getMinutes()+".";
+                if (date.getSeconds() != 59) str = str.substr(0, str.length - 4);
             }
             if (date.getMinutes() > 37)
             {
-                miss = "+"+date.getHours()+"."+date.getMinutes()+".";
-                str = str.substr(0, str.length - 4);
+                miss = "+ "+date.getMinutes()+".";
+                if (date.getSeconds() != 00) str = str.substr(0, str.length - 4);
             }
 
             var f = "<li class='list-group-item'> <span class='badge "+c+"'>"+
