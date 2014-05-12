@@ -69,7 +69,6 @@ function GetData(day)
         }),
         success: function(_data)
         {
-            $('.list-group').empty();
             data = _data.hits;
             AddScore(data);
         },
@@ -81,6 +80,7 @@ function AddScore(d)
 {
     if (d.total > 0)
     {
+        $('.list-group').empty();
         $.each(d.hits, function(index){
             var date = new Date(this.sort[0]);
 
