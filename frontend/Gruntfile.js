@@ -63,6 +63,16 @@ module.exports = function(grunt) {
                         to: '<link rel="stylesheet" href="$1.css" />'
                     }
                 ]
+            },
+            // Replace console.log
+            consolelog: {
+                src: ['build/**/*.js'],
+                overwrite: true,
+                replacements:[
+                    {
+                        from: /console\.log\(.*\);/g
+                    }
+                ]
             }
         }
     });
@@ -81,5 +91,5 @@ module.exports = function(grunt) {
     });
 
     // Runs all tasks needed for a build
-    grunt.registerTask('build', 'Buildtask', ['clean', 'copy', 'less', 'replace:less']);
+    grunt.registerTask('build', 'Buildtask', ['clean', 'copy', 'less', 'replace:less', 'replace:consolelog']);
 };
