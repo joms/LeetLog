@@ -88,20 +88,14 @@ function AddScore(d)
 
             var str = addZ(date.getSeconds()) +"."+ addZ2(date.getMilliseconds());
 
-            var miss = "";
-            if (date.getMinutes() < 37)
+            if (date.getMinutes() <= 36 || date.getMinutes() >= 38)
             {
-                miss = "- "+date.getMinutes()+".";
+                str = (date.getMinutes() <= 36 ? "- ":"+ ") + date.getMinutes()+"."+str;
                 if (date.getSeconds() != 59) str = str.substr(0, str.length - 4);
-            }
-            if (date.getMinutes() > 37)
-            {
-                miss = "+ "+date.getMinutes()+".";
-                if (date.getSeconds() != 00) str = str.substr(0, str.length - 4);
             }
 
             var f = "<li class='list-group-item'> <span class='badge "+c+"'>"+
-                miss + str
+                str
                 +"</span>"+this.fields.nick[0]+"</li>";
             $('.list-group').append(f);
 
