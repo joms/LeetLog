@@ -17,8 +17,9 @@ $(document).ready(function(){
                 break;
             default:
                 $('.dropdown-menu').append("<li id='"+d+"' onclick='GetData(this)'><a>"+
-                    addZ(d.getDate()) +" "+ addZ(d.getMonth()) +" "+ d.getFullYear()
+                    addZ(d.getDate()) +" "+ addZ(d.getMonth()+1) +" "+ d.getFullYear()
                     +"</a></li>");
+                break;
         }
 
         d.setDate(d.getDate() - 1);
