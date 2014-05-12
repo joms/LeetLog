@@ -88,10 +88,12 @@ function AddScore(d)
 
             var str = addZ(date.getSeconds()) +"."+ addZ2(date.getMilliseconds());
 
-            if (date.getMinutes() <= 36 || date.getMinutes() >= 38)
+            if (date.getMinutes() != 37)
             {
                 str = (date.getMinutes() <= 36 ? "- ":"+ ") + date.getMinutes()+"."+str;
-                if (date.getSeconds() != 59) str = str.substr(0, str.length - 4);
+
+                var x = date.getMinutes() +"."+ date.getSeconds();
+                if (x != 36.59 && x != 38.00) str = str.substr(0, str.length - 4);
             }
 
             var f = "<li class='list-group-item'> <span class='badge "+c+"'>"+
