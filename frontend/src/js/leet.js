@@ -13,8 +13,8 @@ function GetData(day)
     {
         date = new Date(day.id);
 
-        console.log(day);
         $('.dropdown-toggle').text($(day).text());
+        $('.dropdown-toggle').append("<b class='caret'></b>");
     }
     date.setMilliseconds(0);
     date.setSeconds(0);
@@ -100,7 +100,8 @@ function AddScore(d)
 
             var c = (date.getMinutes() == 37) ? "alert-success" : "alert-danger";
 
-            var str = date.getSeconds() +"."+ date.getMilliseconds();
+            var str = addZ(date.getSeconds()) +"."+ addZ2(date.getMilliseconds());
+
             var miss = "";
             if (date.getMinutes() < 37)
             {

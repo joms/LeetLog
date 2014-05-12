@@ -25,4 +25,5 @@ $(document).ready(function(){
     }
 });
 
-function addZ(n){return n<10? '0'+n:''+n;}
+function addZ(n){return n < 10 ? '0'+n : ''+n;}
+function addZ2(n){return n < 100 ? '0'+n : ''+n;}
