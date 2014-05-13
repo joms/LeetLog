@@ -4,6 +4,8 @@ LeetLog
 An IRC-logger for the channel *#scene.no*, where every day at 13:37 they post an empty post with the goal of hitting 13:37.000 (only been achieved once).   
 This logger will log wether a post is valid (inside 13:37:00-13:37:59 and empty), or invalid by being outside or having multiple entries. It'll go active at 13:35 and be active to 13:40. The purpose is most for fun, but also having the ability to make statistics from de data collected.
 
+You can check out the cool frontend that runs [here](http://joms.github.io/LeetLog/)
+
 ---
 
 **Log format**
