@@ -78,9 +78,9 @@ function GetData(day)
 
 function AddScore(d)
 {
+    $('.list-group').empty();
     if (d.total > 0)
     {
-        $('.list-group').empty();
         $.each(d.hits, function(index){
             var date = new Date(this.sort[0]);
 
