@@ -85,6 +85,7 @@ function AddScore(d)
             var date = new Date(this.sort[0]);
 
             var c = (date.getMinutes() == 37) ? "alert-success" : "alert-danger";
+            if (this._type == 3) c = "alert-danger";
 
             var str = addZ(date.getSeconds()) +"."+ addZ2(date.getMilliseconds());
 
