@@ -14,7 +14,7 @@ You can check out the cool frontend which'll contain more stats as time goes [he
     - Too early (before 13:37:00)
     - Too late (after 13:37:59)
     - Multiple entries inside 13:37. Only the first entry will count
-    Date (dd-mm-yyyy)
+    Date (dd/mm/yyyy)
     Time (hh:mm:ss:ms)
     Nick
     Message
@@ -34,11 +34,11 @@ You can check out the cool frontend which'll contain more stats as time goes [he
     
 **Example**
 
-	03-07-2014 13:36:05:417 1 JoMs Tulljballj
-	03-07-2014 13:37:02:143 0 JoMs 1
-	03-07-2014 13:37:39:942 3 JoMs  
-	03-07-2014 13:37:43:532 2 JoMs Tisse tass, kliss klass
-	03-07-2014 13:38:05:214 4 JoMs Pen runde
+	03/07/2014-13:36:05:417 1 JoMs Tulljballj
+	03/07/2014-13:37:02:143 0 JoMs 1
+	03/07/2014-13:37:39:942 3 JoMs  
+	03/07/2014-13:37:43:532 2 JoMs Tisse tass, kliss klass
+	03/07/2014-13:38:05:214 4 JoMs Pen runde
     
 **GROK**
 
