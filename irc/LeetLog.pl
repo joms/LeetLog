@@ -94,12 +94,13 @@ sub leet {
                 # Define the valid variable
                 my $valid = 0;
 
-my $f = $msg;
-$f =~ s/(.)/sprintf("%x",ord($1))/eg;
-if ($f eq 2)
-{
-$msg = " ";
-}
+                # Replaces result of ^B with hex-value
+                my $x = $msg;
+                $x =~ s/(.)/sprintf("%x",ord($1))/eg;
+                if ($f eq 2)
+                {
+                    $msg = " ";
+                }
                 
                 # Check if it's before :37
                 if (strftime("%M", localtime($t)) < 37)
@@ -107,10 +108,10 @@ $msg = " ";
                     # Check if string is empty, for miss
                     if ($msg =~ /^\s+$/i)
                     {
-Irssi::print("foo");
                         # Statistic over number of spaces
                         $msg = length($msg);
-$msg = $msg ." ". substr $time, -6, 6;
+                        # Adding milliseconds for stats
+                        $msg = $msg ." ". substr $time, -6, 6;
                         # Invalid because of miss
                         $valid = 5;
                     } else {
@@ -124,10 +125,10 @@ $msg = $msg ." ". substr $time, -6, 6;
                         # Check if string is empty, for miss
                         if ($msg =~ /^\s+$/i)
                         {
-Irssi::print("bar");
                             # Statistic over number of spaces
                             $msg = length($msg);
-$msg = $msg ." ". substr $time, -6, 6;
+                            # Adding milliseconds for stats
+                            $msg = $msg ." ". substr $time, -6, 6;
                             # Invalid because of miss
                             $valid = 6;
                         } else {
@@ -138,7 +139,6 @@ $msg = $msg ." ". substr $time, -6, 6;
                         # Check if string is empty
                         if ($msg =~ /^\s+$/)
                         {
-Irssi::print("baz");
                             # Check if user has already made an entry
                             foreach my $u (@users)
                             {
@@ -151,7 +151,8 @@ Irssi::print("baz");
                             
                             # Statistic over number of spaces
                             $msg = length($msg);
-$msg = $msg ." ". substr $time, -6, 6;
+                            # Adding milliseconds for stats
+                            $msg = $msg ." ". substr $time, -6, 6;
                         } else {
                             # Invalid because of text in 13:37
                             $valid = 2;   
@@ -168,8 +169,6 @@ $msg = $msg ." ". substr $time, -6, 6;
                 
                 #Construct logline
                 my $log = $date ."-". $time ." ". $valid ." ". $nick ." ". $msg ."\n";
-
-Irssi::print($log);
                 
                 #Open file and write info to it
                 open (my $fh, ">>", Irssi::settings_get_str("LeetLog_file"));
