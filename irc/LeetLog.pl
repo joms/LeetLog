@@ -97,7 +97,7 @@ sub leet {
                 # Replaces result of ^B with hex-value
                 my $x = $msg;
                 $x =~ s/(.)/sprintf("%x",ord($1))/eg;
-                if ($f eq 2)
+                if ($x eq 2)
                 {
                     $msg = " ";
                 }
