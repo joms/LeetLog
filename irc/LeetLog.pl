@@ -53,7 +53,7 @@ my $lastround = "";
 my @users;
 
 # Debug variable
-my $debug = 1;
+my $debug = 0;
 
 =po
     Valid/Invalid reasons:
