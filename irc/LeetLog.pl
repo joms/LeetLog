@@ -92,12 +92,18 @@ sub leet {
             if (Irssi::settings_get_str("LeetLog_file"))
             {
                 # Define the valid variable
-                my $valid = 0;
+                my $valid = 1;
 
-                # Replaces result of ^B with hex-value
+                # Replaces msg with hex-value
+=po
+2 : ^B
+3 : ^C
+f : ^O
+=cut
+
                 my $x = $msg;
                 $x =~ s/(.)/sprintf("%x",ord($1))/eg;
-                if ($x eq 2)
+                if ($x eq 2 || $x eq 3 || $x eq "f")
                 {
                     $msg = " ";
                 }
