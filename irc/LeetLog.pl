@@ -94,15 +94,16 @@ sub leet {
                 # Define the valid variable
                 my $valid = 1;
 
-                # Replaces msg with hex-value
-                my $x = $msg;
+=po
+2 : ^B
+3 : ^C
+f : ^O
+=cut
+
+                # Replaces first char in message with hex-value
+                my $x = substr($msg, 0, 1);
                 $x =~ s/(.)/sprintf("%x",ord($1))/eg;
 
-                =po
-                    2 : ^B
-                    3 : ^C
-                    f : ^O
-                =cut
                 if ($x eq 2 || $x eq 3 || $x eq "f")
                 {
                     $msg = " ";
