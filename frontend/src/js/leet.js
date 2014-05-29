@@ -38,7 +38,6 @@ function GetData(day)
                                     "terms": {
                                         "_type": [
                                             "0",
-                                            "2",
                                             "3",
                                             "5",
                                             "6"
