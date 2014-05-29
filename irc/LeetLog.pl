@@ -92,7 +92,7 @@ sub leet {
             if (Irssi::settings_get_str("LeetLog_file"))
             {
                 # Define the valid variable
-                my $valid = 1;
+                my $valid = 0;
 
                 # Replaces msg with hex-value
                 my $x = $msg;
