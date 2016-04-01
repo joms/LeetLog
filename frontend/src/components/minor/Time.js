@@ -6,7 +6,8 @@ import CardText from 'material-ui/lib/card/card-text';
 var moment = require('moment');
 
 const style = {
-    "maxWidth" : "200px"
+    // "maxWidth" : "250px"
+    marginBottom: "20px"
 };
 
 var Time = React.createClass({
@@ -23,8 +24,14 @@ var Time = React.createClass({
     },
 
     getTime: function() {
-        var t = moment();
-        return t.format("HH:mm:ss");
+        var now = moment();
+        var next = new moment("13 37", "HH mm");
+
+        if (next -  now  < 0) {
+            next = next.add(1, 'days');
+        }
+
+        return moment(next).fromNow();
     },
 
     render: function() {
@@ -32,7 +39,7 @@ var Time = React.createClass({
             <div>
                 <Card style={style} >
                     <CardHeader
-                        title="Next Leet"
+                        title="Next Leet is in..."
                     />
                     <CardText>
                         {this.state.countdown}
