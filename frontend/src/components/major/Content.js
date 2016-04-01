@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Time from './../minor/Time';
+import ResultTable from './../minor/ResultTable';
 
 class Content extends React.Component {
 
@@ -8,6 +9,7 @@ class Content extends React.Component {
         return (
             <div>
                 <Time />
+                <ResultTable />
             </div>
         );
     }
