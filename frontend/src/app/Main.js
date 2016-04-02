@@ -1,8 +1,3 @@
-/**
- * In this file, we create a React component
- * which incorporates components providedby material-ui.
- */
-
 import React from 'react';
 
 import TopBar from './../components/major/TopBar';

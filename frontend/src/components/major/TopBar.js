@@ -1,8 +1,3 @@
-/**
- * In this file, we create a React component
- * which incorporates components providedby material-ui.
- */
-
 import React from 'react';
 import AppBar from '../../../node_modules/material-ui/lib/app-bar';
 

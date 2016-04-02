@@ -6,7 +6,6 @@ import CardText from 'material-ui/lib/card/card-text';
 var moment = require('moment');
 
 const style = {
-    // "maxWidth" : "250px"
     marginBottom: "20px"
 };
 

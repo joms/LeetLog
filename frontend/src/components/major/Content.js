@@ -8,8 +8,12 @@ class Content extends React.Component {
     render() {
         return (
             <div>
-                <Time />
-                <ResultTable />
+                <div>
+                    <Time />
+                </div>
+                <div>
+                    <ResultTable />
+                </div>
             </div>
         );
     }
