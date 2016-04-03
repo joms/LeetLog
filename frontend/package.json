@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "material-ui": "^0.15.0-alpha.2",
-    "moment": "^2.12.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-tap-event-plugin": "^0.2.1"

@@ -3,8 +3,6 @@ import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
 
-var moment = require('moment');
-
 const style = {
     marginBottom: "20px"
 };
@@ -15,7 +13,7 @@ var Time = React.createClass({
     },
 
     componentDidMount: function() {
-        setInterval(this.updateTime, 500);
+        setInterval(this.updateTime, 1000);
     },
 
     updateTime: function() {
@@ -23,8 +21,8 @@ var Time = React.createClass({
     },
 
     getTime: function() {
-        var now = moment();
-        var next = new moment("13 37", "HH mm");
+        var now = moment().tz("Europe/Oslo");
+        var next = moment.tz("13 37", "HH mm", "Europe/Oslo");
 
         if (next -  now  < 0) {
             next = next.add(1, 'days');
