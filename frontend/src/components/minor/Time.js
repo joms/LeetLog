@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Paper from 'material-ui/lib/paper';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
@@ -34,6 +36,7 @@ var Time = React.createClass({
     render: function() {
         return (
             <div>
+                <Paper>
                 <Card style={style} >
                     <CardHeader
                         title="Next Leet is in..."
@@ -42,6 +45,7 @@ var Time = React.createClass({
                         {this.state.countdown}
                     </CardText>
                 </Card>
+                </Paper>
             </div>
         );
     }

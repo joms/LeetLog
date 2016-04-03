@@ -6,15 +6,23 @@ import TableBody from 'material-ui/lib/table/table-body';
 import ResultTableHeader from './resulttableheader';
 import ResultTableRow from './resulttablerow';
 
-const ResultTable = () => (
-    <Table>
-        <TableHeader>
-            <ResultTableHeader />
-        </TableHeader>
-        <TableBody>
-            <ResultTableRow />
-        </TableBody>
-    </Table>
-);
+var ResultTable = React.createClass({
+    render: function() {
+        var rows = this.props.leets.map(function(leet) {
+            return <ResultTableRow key={leet._id} leet={leet}/>
+        });
+
+        return (
+            <Table>
+                <TableHeader>
+                    <ResultTableHeader />
+                </TableHeader>
+                <TableBody>
+                    {rows}
+                </TableBody>
+            </Table>
+        );
+    }
+});
 
 export default ResultTable;
