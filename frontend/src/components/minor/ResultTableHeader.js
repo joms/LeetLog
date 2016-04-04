@@ -4,9 +4,8 @@ import TableRow from 'material-ui/lib/table/table-row';
 
 const ResultTableHeader = () => (
     <TableRow>
-        <TableHeaderColumn>ID</TableHeaderColumn>
-        <TableHeaderColumn>Name</TableHeaderColumn>
-        <TableHeaderColumn>Status</TableHeaderColumn>
+        <TableHeaderColumn>Nick</TableHeaderColumn>
+        <TableHeaderColumn>Time</TableHeaderColumn>
     </TableRow>
 );
 
