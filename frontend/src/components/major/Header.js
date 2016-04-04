@@ -5,16 +5,17 @@ const style={
     "marginBottom" : "25px"
 }
 
-class TopBar extends React.Component {
+class Header extends React.Component {
 
     render() {
         return (
             <AppBar
-                title="LeetLog"
+                showMenuIconButton={false}
+                title={this.props.title}
                 style={style}
             />
         );
     }
 }
 
-export default TopBar;
+export default Header;
