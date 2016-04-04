@@ -1,13 +1,15 @@
 import React from 'react';
 
-import TopBar from './../components/major/TopBar';
+import Header from './../components/major/Header';
 import Content from './../components/major/Content';
 
 class Main extends React.Component {
     render() {
         return (
             <div>
-                <TopBar />
+                <Header
+                    title={"LeetLog \u2014 #scene.no"}
+                />
                 <Content />
             </div>
         );
