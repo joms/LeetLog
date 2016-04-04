@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Time from './../minor/Time';
-import ResultTable from './../minor/ResultTable';
+import ResultList from './../minor/ResultList';
 
 var Content = React.createClass({
     componentDidMount: function() {
@@ -89,7 +89,7 @@ var Content = React.createClass({
                     <Time />
                 </div>
                 <div>
-                    <ResultTable leets={this.state.leets} />
+                    <ResultList leets={this.state.leets} />
                 </div>
             </div>
         );
