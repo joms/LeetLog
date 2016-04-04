@@ -52,7 +52,6 @@ var Content = React.createClass({
                                     "terms": {
                                         "_type": [
                                             "0",
-                                            "3",
                                             "5",
                                             "6"
                                         ]
@@ -85,9 +84,9 @@ var Content = React.createClass({
     render: function() {
         return (
             <div>
-                <div>
+                {/*<div>
                     <Time />
-                </div>
+                </div>*/}
                 <div>
                     <ResultList leets={this.state.leets} />
                 </div>
@@ -97,59 +96,3 @@ var Content = React.createClass({
 });
 
 export default Content;
-
-/*
- $.ajax('http://thorium.skriveleif.com:9200/irc-leet/_search', {
- method: "POST",
- success: function(data) {
- console.log(data);
- },
- error: function(xhr, status, err) {
-
- },
- data: {
- "fields": [
- "time",
- "status",
- "nick",
- "msg"
- ],
- "query": {
- "filtered": {
- "query": {
- "bool": {
- "must": [
- {
- "terms": {
- "_type": [
- "0",
- "3",
- "5",
- "6"
- ]
- }
- }
- ]
- }
- },
- "filter": {
- "range": {
- "@timestamp": {
- "gte": from,
- "lte": to
- }
- }
- }
- }
- },
- "size": 500,
- "sort": [
- {
- "@timestamp": {
- "order": "asc"
- }
- }
- ]
- }
- });
- */
