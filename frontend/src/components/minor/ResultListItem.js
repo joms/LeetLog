@@ -43,7 +43,7 @@ var ResultListItem = React.createClass({
                     <FontIcon
                         style={numberStyle}
                     >
-                        {this.props.id + 1}
+                        {this.props.score}
                     </FontIcon>
                 }
                 secondaryText={str}

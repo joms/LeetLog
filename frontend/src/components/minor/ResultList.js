@@ -5,8 +5,15 @@ import ResultListItem from './resultlistitem';
 
 var ResultList = React.createClass({
     render: function() {
+        var i = 1;
         var rows = this.props.leets.map(function(leet, index) {
-            return <ResultListItem key={leet._id} leet={leet} id={index}/>
+            if (leet.fields.status[0] == 0) {
+                var score = i;
+                i++;
+            } else {
+                var score = "X";
+            }
+            return <ResultListItem key={leet._id} leet={leet} score={score}/>
         });
 
         return (
