@@ -17,7 +17,7 @@ var Content = React.createClass({
         var to = moment.tz("23 59", "HH mm", "Europe/Oslo");
 
         var request = new XMLHttpRequest();
-        request.open('POST', 'http://thorium.skriveleif.com:9200/irc-leet/_search', true);
+        request.open('GET', 'http://localhost:8000/api/leet/'+from+'/'+to, true);
 
         var that = this;
 
@@ -25,7 +25,11 @@ var Content = React.createClass({
             if (request.status >= 200 && request.status < 400) {
                 // Success!
                 var data = JSON.parse(request.responseText);
-                that.setState({"leets": data.hits.hits});
+                if (data.success == true) {
+                    that.setState({"leets": data.result.hits.hits});
+                } else {
+                    // There was a connection error of some sort
+                }
             } else {
                 // We reached our target server, but it returned an error
 
@@ -36,49 +40,7 @@ var Content = React.createClass({
             // There was a connection error of some sort
         };
 
-        request.send(JSON.stringify({
-            "fields": [
-                "time",
-                "status",
-                "nick",
-                "msg"
-            ],
-            "query": {
-                "filtered": {
-                    "query": {
-                        "bool": {
-                            "must": [
-                                {
-                                    "terms": {
-                                        "_type": [
-                                            "0",
-                                            "5",
-                                            "6"
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "filter": {
-                        "range": {
-                            "@timestamp": {
-                                "gte": from,
-                                "lte": to
-                            }
-                        }
-                    }
-                }
-            },
-            "size": 500,
-            "sort": [
-                {
-                    "@timestamp": {
-                        "order": "asc"
-                    }
-                }
-            ]
-        }));
+        request.send();
     },
 
     render: function() {
