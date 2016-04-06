@@ -10,7 +10,6 @@ var client = new elasticsearch.Client({
 router.route('/:from/:to').get(function(req,res){
     client.search({
         index: 'irc-leet',
-        // type: 'tweets',
         body: {
             "fields": [
                 "time",
