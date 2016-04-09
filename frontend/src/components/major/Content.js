@@ -16,7 +16,7 @@ var Content = React.createClass({
         var to = moment.tz("23 59", "HH mm", "Europe/Oslo");
 
         var request = new XMLHttpRequest();
-        request.open('GET', 'http://localhost:8000/api/leet/'+from+'/'+to, true);
+        request.open('GET', 'http://46.101.16.97/api/leet/'+from+'/'+to, true);
 
         var that = this;
 
