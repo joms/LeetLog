@@ -1,0 +1,31 @@
+{
+  "name": "LeetLog-Backend",
+  "preferGlobal": true,
+  "author": "Jo Emil Holen",
+  "description": "API endpoint for the LeetLog utility",
+  "contributors": [
+    "Jo Emil Holen <jo-emil@zoodo.no>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joms/LeetLog.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "elasticsearch": "^10.1.3",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  },
+  "bugs": {
+    "url": "https://github.com/joms/LeetLog/issues"
+  },
+  "homepage": "https://github.com/joms/LeetLog",
+  "version": "0.0.1",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "start": "node ./server.js",
+    "develop": "nodemon --watch routes --watch server.js ./server.js --debug"
+  }
+}
