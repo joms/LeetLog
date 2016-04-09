@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Time from './../minor/Time';
 import ResultList from './../minor/ResultList';
 
 var Content = React.createClass({
