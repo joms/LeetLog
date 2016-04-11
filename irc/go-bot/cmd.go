@@ -12,6 +12,5 @@ func main() {
 		Channels: 	strings.Split("#sandkas.se", ","),
 		User:		"LeetBot",
 		Nick:		"LeetBot",
-		Prefix: 	"&",
 	})
 }
