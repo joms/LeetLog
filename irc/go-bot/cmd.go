@@ -1,12 +1,12 @@
 package main
 
 import(
-	"bot"
+	"irc"
 	"strings"
 )
 
 func main() {
-	bot.Run(&bot.Config{
+	irc.Run(&irc.Config{
 		Admins:		strings.Split("JoMs", ","),
 		Server:		"localhost:6667",
 		Channels: 	strings.Split("#sandkas.se", ","),
