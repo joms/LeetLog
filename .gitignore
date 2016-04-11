@@ -1,5 +1,5 @@
 .idea/
 node_modules
 build/
-*src/github.com
+irc/go-bot/src/github.com
 *pkg/
