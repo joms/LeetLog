@@ -1,5 +1,10 @@
 package bot
 
+import (
+	"log"
+	"fmt"
+)
+
 type Cmd struct {
 	Raw string
 	Channel string
@@ -8,9 +13,89 @@ type Cmd struct {
 	Command string
 	RawArgs string
 	Args []string
+	Admin bool
 }
 
-type User struct{
+type User struct {
 	Nick string
 	Realname string
+}
+
+type Leet struct {
+	User *User
+	Time string
+	Status int
+	Message string
+	Channel string
+}
+
+//// SHIT I DUNNO
+
+
+type Command struct {
+	Cmd         string
+	CmdFunc   activeCmdFunc
+	Description string
+	ExampleArgs string
+	Admin bool
+}
+
+type incomingMessage struct {
+	Channel        string
+	Text           string
+	User           *User
+	BotCurrentNick string
+}
+
+// CmdResult is the result message of V2 commands
+type CmdResult struct {
+	Channel string // The channel where the bot should send the message
+	Message string // The message to be sent
+}
+
+type activeCmdFunc func(cmd *Cmd) (string, error)
+
+var (
+	commands = make(map[string]*Command)
+)
+
+
+// RegisterCommand adds a new command to the bot.
+// The command(s) should be registered in the Init() func of your package
+// command: String which the user will use to execute the command, example: reverse
+// decription: Description of the command to use in !help, example: Reverses a string
+// exampleArgs: Example args to be displayed in !help <command>, example: string to be reversed
+// cmdFunc: Function which will be executed. It will received a parsed command as a Cmd value
+func RegisterCommand(command, description, exampleArgs string, cmdFunc activeCmdFunc, admin bool) {
+	commands[command] = &Command{
+		Cmd:         command,
+		CmdFunc:   cmdFunc,
+		Description: description,
+		ExampleArgs: exampleArgs,
+		Admin: admin,
+	}
+}
+
+
+func (b *Bot) handleCmd(c *Cmd) {
+	cmd := commands[c.Command]
+
+	if cmd == nil {
+		log.Printf("Command not found %v", c.Command)
+		return
+	}
+
+	message, err := cmd.CmdFunc(c)
+	b.checkCmdError(err, c)
+	if message != "" {
+		b.handlers.Response(c.Channel, message, c.User)
+	}
+}
+
+func (b *Bot) checkCmdError(err error, c *Cmd) {
+	if err != nil {
+		errorMsg := fmt.Sprintf(errorExecutingCommand, c.Command, err.Error())
+		log.Printf(errorMsg)
+		b.handlers.Response(c.Channel, errorMsg, c.User)
+	}
 }

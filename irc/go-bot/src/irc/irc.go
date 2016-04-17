@@ -4,6 +4,7 @@ import (
 	"github.com/thoj/go-ircevent"
 	"log"
 	"bot"
+	"time"
 )
 
 type Config struct {
@@ -28,7 +29,16 @@ func onWelcome(e *irc.Event) {
 }
 
 func onPRIVMSG(e *irc.Event) {
-	b.MessageReceived(e.Arguments[0], e.Message(), &bot.User{Nick: e.Nick})
+	t := time.Now()
+	b.MessageReceived(e.Arguments[0], e.Message(), &bot.User{Nick: e.Nick}, t)
+}
+
+func responseHandler(target string, message string, sender *bot.User) {
+	channel := target
+	if ircConn.GetNick() == target {
+		channel = sender.Nick
+	}
+	ircConn.Privmsg(channel, message)
 }
 
 func Run(c *Config) {
@@ -37,7 +47,12 @@ func Run(c *Config) {
 	ircConn = irc.IRC(config.User, config.Nick)
 
 	ircConn.AddCallback("001", onWelcome)
-	ircConn.AddCallback("PRIVMSG", onPRIVMSG)
+
+	ircConn.AddCallback("PRIVMSG", func(event *irc.Event) {
+		go func(event *irc.Event) {
+			onPRIVMSG(event)
+		}(event)
+	});
 
 	err := ircConn.Connect(config.Server)
 	if err != nil {

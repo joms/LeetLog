@@ -1,8 +1,8 @@
 package bot
 
 import (
-	"fmt"
 	"time"
+	"fmt"
 )
 
 type Bot struct{}
@@ -10,9 +10,14 @@ type Bot struct{}
 const CmdPrefix = "&"
 const LeetPrefix = " "
 
-func (b *Bot) MessageReceived(channel string, text string, sender *User) {
-	//command := parse(text, channel, sender)
-	//fmt.Println(command)
-	t := time.Now()
-	fmt.Println(t.Format("13:37:01:123"))
+
+
+func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.Time) {
+	command := parse(text, channel, sender)
+	fmt.Println(command)
+
+	switch command.Command {
+	case " ":
+		b.leet(command, t)
+	}
 }
