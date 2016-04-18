@@ -69,6 +69,11 @@ func RegisterCommand(command, description, exampleArgs string, cmdFunc activeCmd
 func (b *Bot) handleCmd(c *Cmd) {
 	cmd := commands[c.Command]
 
+	if cmd.Admin == true && b.IsAdmin(c.User) == false {
+		return;
+	}
+
+
 	if cmd == nil {
 		log.Printf("Command not found %v", c.Command)
 		return
