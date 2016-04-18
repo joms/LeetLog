@@ -5,6 +5,7 @@ import(
 	"strings"
 )
 
+// Set up and run our IRC connection
 func main() {
 	irc.Run(&irc.Config{
 		Admins:		strings.Split("JoMs", ","),

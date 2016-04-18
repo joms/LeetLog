@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// We probably have a leet to deal with
 func (b *Bot) leet(c *Cmd, t time.Time) {
 	l := &Leet{User: c.User, Channel: c.Channel, Message: c.Message}
 	l.Time = t.Format("2006/01/02-15:04:05.999")
@@ -14,6 +15,7 @@ func (b *Bot) leet(c *Cmd, t time.Time) {
 	var h = t.Hour();
 	var m = t.Minute();
 
+	// Is it valid?
 	if l.Message == " " {
 		if h < 13 {
 			l.Status = 5
@@ -44,6 +46,7 @@ func (b *Bot) leet(c *Cmd, t time.Time) {
 		}
 	}
 
+	// Log the line
 	var text = l.Time +" "+ l.Channel +" "+ strconv.Itoa(l.Status) +" "+ l.User.Nick +" "+ l.Message +"\n"
 
 	f, err := os.OpenFile("halla.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)

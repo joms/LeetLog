@@ -9,6 +9,7 @@ var (
 	re = regexp.MustCompile("\\s+") // Matches one or more spaces
 )
 
+// Parse incoming message into useful data
 func parse(s string, channel string, user *User) *Cmd {
 	c := &Cmd{Raw: s}
 
@@ -48,6 +49,7 @@ func parse(s string, channel string, user *User) *Cmd {
 	return c
 }
 
+// Remove spaces from string
 func removeExtraSpaces(args string) string {
 	return re.ReplaceAllString(strings.TrimSpace(args), " ")
 }

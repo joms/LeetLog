@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// Input command result
 type Cmd struct {
 	Raw string
 	Channel string
@@ -16,11 +17,13 @@ type Cmd struct {
 	Admin bool
 }
 
+// User structure
 type User struct {
 	Nick string
 	Realname string
 }
 
+// Leet structure
 type Leet struct {
 	User *User
 	Time string
@@ -29,9 +32,7 @@ type Leet struct {
 	Channel string
 }
 
-//// SHIT I DUNNO
-
-
+// Command structure
 type Command struct {
 	Cmd         string
 	CmdFunc   activeCmdFunc
@@ -40,24 +41,12 @@ type Command struct {
 	Admin bool
 }
 
-type incomingMessage struct {
-	Channel        string
-	Text           string
-	User           *User
-	BotCurrentNick string
-}
-
-// CmdResult is the result message of V2 commands
-type CmdResult struct {
-	Channel string // The channel where the bot should send the message
-	Message string // The message to be sent
-}
 
 type activeCmdFunc func(cmd *Cmd) (string, error)
 
-var (
-	commands = make(map[string]*Command)
-)
+var commands = make(map[string]*Command)
+
+const errorExecutingCommand = "Error executing %s: %s"
 
 
 // RegisterCommand adds a new command to the bot.
@@ -76,7 +65,7 @@ func RegisterCommand(command, description, exampleArgs string, cmdFunc activeCmd
 	}
 }
 
-
+// Run the command
 func (b *Bot) handleCmd(c *Cmd) {
 	cmd := commands[c.Command]
 
@@ -92,6 +81,7 @@ func (b *Bot) handleCmd(c *Cmd) {
 	}
 }
 
+// Check for command errors
 func (b *Bot) checkCmdError(err error, c *Cmd) {
 	if err != nil {
 		errorMsg := fmt.Sprintf(errorExecutingCommand, c.Command, err.Error())
