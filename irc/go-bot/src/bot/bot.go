@@ -47,6 +47,9 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 		switch command.Command {
 		case " ":
 			b.leet(command, t)
+
+		default:
+			b.handleCmd(command)
 		}
 	}
 }

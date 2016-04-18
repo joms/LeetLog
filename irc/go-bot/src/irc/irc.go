@@ -2,9 +2,11 @@ package irc
 
 import (
 	"github.com/thoj/go-ircevent"
-	"log"
 	"bot"
+	"log"
 	"time"
+
+	_ "commands/gif"
 )
 
 // Bot configuration
