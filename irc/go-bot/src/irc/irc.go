@@ -65,6 +65,7 @@ func Run(c *Config) {
 			Response: responseHandler,
 		},
 		c.Admins,
+		ircConn,
 	)
 
 	// Add callbacks

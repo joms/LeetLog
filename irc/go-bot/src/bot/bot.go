@@ -2,12 +2,14 @@ package bot
 
 import (
 	"time"
+	"github.com/thoj/go-ircevent"
 )
 
 // Bot handles the bot instance
 type Bot struct {
 	handlers *Handlers
 	admins []string
+	ircCon *irc.Connection
 }
 
 const CmdPrefix = "&"
@@ -22,10 +24,11 @@ type Handlers struct {
 }
 
 // New configures a new bot instance
-func New(h *Handlers, a []string) *Bot {
+func New(h *Handlers, a []string, i *irc.Connection) *Bot {
 	b := &Bot{
 		handlers: h,
 		admins: a,
+		ircCon: i,
 	}
 	return b
 }
