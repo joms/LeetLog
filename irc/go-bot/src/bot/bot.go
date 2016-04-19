@@ -55,6 +55,29 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 		case " ":
 			b.leet(command, t)
 
+		// Hardcoded commands
+		case "join":
+			if ! b.IsAdmin(command.User) {
+				return;
+			}
+
+			if msg == false {
+				return;
+			}
+
+			b.join(command)
+
+		case "leave":
+			if ! b.IsAdmin(command.User) {
+				return;
+			}
+
+			if msg == false {
+				return;
+			}
+
+			b.leave(command)
+
 		default:
 			b.handleCmd(command)
 		}
