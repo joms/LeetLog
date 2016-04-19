@@ -65,7 +65,7 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				return;
 			}
 
-			b.join(command)
+			b.ircCon.Join(command.Args[0])
 
 		case "leave":
 			if ! b.IsAdmin(command.User) {
@@ -76,7 +76,7 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				return;
 			}
 
-			b.leave(command)
+			b.ircCon.Part(command.Args[0])
 
 		default:
 			b.handleCmd(command)
