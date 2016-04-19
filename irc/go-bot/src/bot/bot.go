@@ -35,15 +35,19 @@ func New(h *Handlers, a []string, i *irc.Connection) *Bot {
 
 // We've received a message to massage
 func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.Time) {
+	var msg = false
+
 	// If it was an msg, check for admin rights
 	if sender.Nick == channel {
 		if ! b.IsAdmin(sender) {
 			return;
+		} else {
+			msg = true
 		}
 	}
 
 	// Parse input
-	command := parse(text, channel, sender)
+	command := parse(text, channel, sender, msg)
 
 	// Do something with the result
 	if command != nil {

@@ -14,7 +14,6 @@ type Cmd struct {
 	Command string
 	RawArgs string
 	Args []string
-	Admin bool
 }
 
 // User structure
@@ -39,6 +38,7 @@ type Command struct {
 	Description string
 	ExampleArgs string
 	Admin bool
+	Msg bool
 }
 
 
@@ -55,13 +55,14 @@ const errorExecutingCommand = "Error executing %s: %s"
 // decription: Description of the command to use in !help, example: Reverses a string
 // exampleArgs: Example args to be displayed in !help <command>, example: string to be reversed
 // cmdFunc: Function which will be executed. It will received a parsed command as a Cmd value
-func RegisterCommand(command, description, exampleArgs string, cmdFunc activeCmdFunc, admin bool) {
+func RegisterCommand(command, description, exampleArgs string, cmdFunc activeCmdFunc, admin bool, msg bool) {
 	commands[command] = &Command{
 		Cmd:         command,
 		CmdFunc:   cmdFunc,
 		Description: description,
 		ExampleArgs: exampleArgs,
 		Admin: admin,
+		Msg: msg,
 	}
 }
 
@@ -73,6 +74,9 @@ func (b *Bot) handleCmd(c *Cmd) {
 		return;
 	}
 
+	if cmd.Msg == true && c.User.Nick != c.Channel {
+		return;
+	}
 
 	if cmd == nil {
 		log.Printf("Command not found %v", c.Command)

@@ -10,10 +10,10 @@ var (
 )
 
 // Parse incoming message into useful data
-func parse(s string, channel string, user *User) *Cmd {
+func parse(s string, channel string, user *User, msg bool) *Cmd {
 	c := &Cmd{Raw: s}
 
-	if !strings.HasPrefix(s, CmdPrefix) && !strings.HasPrefix(s, LeetPrefix) {
+	if !strings.HasPrefix(s, CmdPrefix) && !strings.HasPrefix(s, LeetPrefix) && msg == false {
 		return nil
 	}
 
@@ -44,8 +44,7 @@ func parse(s string, channel string, user *User) *Cmd {
 			c.Args = strings.Split(removeExtraSpaces(c.RawArgs), " ")
 		}
 	}
-
-
+	
 	return c
 }
 
