@@ -19,5 +19,6 @@ func init() {
 		"Returns a random cat gif.",
 		"",
 		gif,
+		false,
 		false)
 }

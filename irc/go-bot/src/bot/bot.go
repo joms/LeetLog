@@ -78,6 +78,17 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 
 			b.ircCon.Part(command.Args[0])
 
+		case "nick":
+			if ! b.IsAdmin(command.User) {
+				return;
+			}
+
+			if msg == false {
+				return;
+			}
+
+			b.ircCon.Nick(command.Args[0])
+
 		default:
 			b.handleCmd(command)
 		}
