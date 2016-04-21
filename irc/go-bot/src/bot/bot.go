@@ -3,6 +3,8 @@ package bot
 import (
 	"time"
 	"github.com/thoj/go-ircevent"
+	"os"
+	"fmt"
 )
 
 // Bot handles the bot instance
@@ -44,6 +46,10 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 		} else {
 			msg = true
 		}
+	}
+
+	if (t.Hour() == 13 && t.Minute() >= 36 && t.Minute() <= 38) {
+		logToFile(t.Format("2006/01/02-15:04:05.999") + " " + sender.Nick + ": " + text + "\n")
 	}
 
 	// Parse input
@@ -103,4 +109,19 @@ func (b *Bot) IsAdmin(u *User) bool {
 		}
 	}
 	return false
+}
+
+func logToFile(str string) {
+	f, err := os.OpenFile("log.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		panic(err)
+	}
+
+	defer f.Close()
+
+	if _, err = f.WriteString(str); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(err)
 }
