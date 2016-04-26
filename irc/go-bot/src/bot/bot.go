@@ -125,3 +125,12 @@ func logToFile(str string) {
 
 	fmt.Println(err)
 }
+
+func inArray(needle string, haystack types.Slice) {
+	for _, a := range haystack {
+		if a == needle {
+			return true
+		}
+	}
+	return false
+}
