@@ -5,6 +5,7 @@ import (
 	"github.com/thoj/go-ircevent"
 	"os"
 	"fmt"
+	"go/types"
 )
 
 // Bot handles the bot instance
@@ -15,7 +16,7 @@ type Bot struct {
 }
 
 const CmdPrefix = "&"
-const LeetPrefix = " "
+const LeetPrefix = []string{" ","^"}
 
 // ResponseHandler must be implemented by the protocol to handle the bot responses
 type ResponseHandler func(target, message string, sender *User)
@@ -103,12 +104,7 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 
 // Check if a given *User is admin
 func (b *Bot) IsAdmin(u *User) bool {
-	for _, a := range b.admins {
-		if a == u.Nick {
-			return true
-		}
-	}
-	return false
+	return inArray(u.Nick, b.admins)
 }
 
 func logToFile(str string) {
