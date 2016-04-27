@@ -5,7 +5,6 @@ import (
 	"github.com/thoj/go-ircevent"
 	"os"
 	"fmt"
-	"go/types"
 )
 
 // Bot handles the bot instance
@@ -16,7 +15,7 @@ type Bot struct {
 }
 
 const CmdPrefix = "&"
-const LeetPrefix = []string{" ","^"}
+//const LeetPrefix = []string{" ","^"}
 
 // ResponseHandler must be implemented by the protocol to handle the bot responses
 type ResponseHandler func(target, message string, sender *User)
@@ -50,6 +49,7 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 	}
 
 	if (t.Hour() == 13 && t.Minute() >= 36 && t.Minute() <= 38) {
+		b.leet(channel, sender, text, t)
 		logToFile(t.Format("2006/01/02-15:04:05.999") + " " + sender.Nick + ": " + text + "\n")
 	}
 
@@ -59,9 +59,6 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 	// Do something with the result
 	if command != nil {
 		switch command.Command {
-		case " ":
-			b.leet(command, t)
-
 		// Hardcoded commands
 		case "join":
 			if ! b.IsAdmin(command.User) {
@@ -122,7 +119,7 @@ func logToFile(str string) {
 	fmt.Println(err)
 }
 
-func inArray(needle string, haystack types.Slice) {
+func inArray(needle string, haystack []string) bool {
 	for _, a := range haystack {
 		if a == needle {
 			return true

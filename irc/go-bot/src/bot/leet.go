@@ -8,8 +8,8 @@ import (
 )
 
 // We probably have a leet to deal with
-func (b *Bot) leet(c *Cmd, t time.Time) {
-	l := &Leet{User: c.User, Channel: c.Channel, Message: c.Message}
+func (b *Bot) leet(channel string, sender *User, msg string, t time.Time) {
+	l := &Leet{User: sender.Nick, Channel: channel, Message: msg}
 	l.Time = t.Format("2006/01/02-15:04:05.999")
 
 	var h = t.Hour();
