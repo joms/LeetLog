@@ -3,6 +3,8 @@ package bot
 import (
 	"time"
 	"github.com/thoj/go-ircevent"
+	"encoding/json"
+	"fmt"
 )
 
 // Bot handles the bot instance
@@ -24,6 +26,13 @@ type Handlers struct {
 	Response ResponseHandler
 }
 
+type JsonLeet struct {
+	Time string
+	Channel string
+	Nick string
+	Status int
+}
+
 // New configures a new bot instance
 func New(h *Handlers, a []string, i *irc.Connection) *Bot {
 	b := &Bot{
@@ -38,8 +47,6 @@ func New(h *Handlers, a []string, i *irc.Connection) *Bot {
 // We've received a message to massage
 func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.Time) {
 	var msg = false
-
-	b.postData("http://localhost:8000", []byte(`{"title":"Buy cheese and bread for breakfast."}`))
 
 	// If it was an msg, check for admin rights
 	if sender.Nick == channel {
@@ -95,6 +102,24 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 		}
 	} else {
 		if (t.Hour() == 13 && t.Minute() >= 35 && t.Minute() <= 39) {
+			jd := &JsonLeet{
+				Time: "halla",
+				Channel: "hei",
+				Nick: "hei",
+				Status: 0,
+			}
+
+			bd, err := json.Marshal(jd)
+			if (err == nil) {
+				fmt.Println(string(bd))
+			}
+
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			//b.postData("http://localhost:8000", json.Marshal(bd))
+
 			b.Leet(channel, sender, text, t)
 		}
 	}
