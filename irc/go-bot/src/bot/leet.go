@@ -2,14 +2,11 @@ package bot
 
 import (
 	"time"
-	"fmt"
-	"strconv"
-	"os"
 )
 
 // We probably have a leet to deal with
-func (b *Bot) leet(channel string, sender *User, msg string, t time.Time) {
-	l := &Leet{User: sender.Nick, Channel: channel, Message: msg}
+func (b *Bot) Leet(channel string, sender *User, msg string, t time.Time) {
+	l := &Leet{User: sender, Channel: channel, Message: msg}
 	l.Time = t.Format("2006/01/02-15:04:05.999")
 
 	var h = t.Hour();
@@ -45,20 +42,4 @@ func (b *Bot) leet(channel string, sender *User, msg string, t time.Time) {
 			}
 		}
 	}
-
-	// Log the line
-	var text = l.Time +" "+ l.Channel +" "+ strconv.Itoa(l.Status) +" "+ l.User.Nick +" "+ l.Message +"\n"
-
-	f, err := os.OpenFile("halla.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
-	if err != nil {
-		panic(err)
-	}
-
-	defer f.Close()
-
-	if _, err = f.WriteString(text); err != nil {
-		panic(err)
-	}
-
-	fmt.Println(err)
 }

@@ -10,11 +10,11 @@ var (
 )
 
 // Parse incoming message into useful data
-func parse(s string, channel string, user *User, msg bool) *Cmd {
+func (b *Bot) Parse(s string, channel string, user *User, msg bool) *Cmd {
 	c := &Cmd{Raw: s}
 
-	if !strings.HasPrefix(s, CmdPrefix) && msg == false {
-		return c
+	if !strings.HasPrefix(s, b.CmdPrefix) && msg == false {
+		return nil
 	}
 
 	c.Channel = strings.TrimSpace(channel)
@@ -22,7 +22,7 @@ func parse(s string, channel string, user *User, msg bool) *Cmd {
 
 
 	// Trim the prefix and extra spaces
-	c.Message = strings.TrimPrefix(s, CmdPrefix)
+	c.Message = strings.TrimPrefix(s, b.CmdPrefix)
 	c.Message = strings.TrimSpace(c.Message)
 
 	// check if we have the command and not only the prefix
