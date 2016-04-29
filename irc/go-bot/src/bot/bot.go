@@ -37,12 +37,12 @@ func New(h *Handlers, a []string, i *irc.Connection) *Bot {
 }
 
 // We've received a message to massage
-func (bot *Bot) MessageReceived(channel string, text string, sender *User, t time.Time) {
+func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.Time) {
 	var msg = false
 
 	// If it was an msg, check for admin rights
 	if sender.Nick == channel {
-		if ! bot.IsAdmin(sender) {
+		if ! b.IsAdmin(sender) {
 			return;
 		} else {
 			msg = true
@@ -50,14 +50,14 @@ func (bot *Bot) MessageReceived(channel string, text string, sender *User, t tim
 	}
 
 	// Parse input
-	command := bot.Parse(text, channel, sender, msg)
+	command := b.Parse(text, channel, sender, msg)
 
 	// Do something with the result
 	if command != nil {
 		switch command.Command {
 		// Hardcoded commands
 		case "join":
-			if ! bot.IsAdmin(command.User) {
+			if ! b.IsAdmin(command.User) {
 				return;
 			}
 
@@ -65,10 +65,10 @@ func (bot *Bot) MessageReceived(channel string, text string, sender *User, t tim
 				return;
 			}
 
-			bot.ircCon.Join(command.Args[0])
+			b.ircCon.Join(command.Args[0])
 
 		case "leave":
-			if ! bot.IsAdmin(command.User) {
+			if ! b.IsAdmin(command.User) {
 				return;
 			}
 
@@ -76,10 +76,10 @@ func (bot *Bot) MessageReceived(channel string, text string, sender *User, t tim
 				return;
 			}
 
-			bot.ircCon.Part(command.Args[0])
+			b.ircCon.Part(command.Args[0])
 
 		case "nick":
-			if ! bot.IsAdmin(command.User) {
+			if ! b.IsAdmin(command.User) {
 				return;
 			}
 
@@ -87,15 +87,15 @@ func (bot *Bot) MessageReceived(channel string, text string, sender *User, t tim
 				return;
 			}
 
-			bot.ircCon.Nick(command.Args[0])
+			b.ircCon.Nick(command.Args[0])
 
 		default:
-			bot.handleCmd(command)
+			b.handleCmd(command)
 		}
 	} else {
 		// http://i.imgur.com/khRqBiC.gif
-
-			leet := bot.Leet(channel, sender, text, t)
+		if (t.Hour() == 13 && t.Minute() >= 35 && t.Minute() <= 39) {
+			leet := b.Leet(channel, sender, text, t)
 
 			leetData, err := json.Marshal(leet)
 			if err != nil {
