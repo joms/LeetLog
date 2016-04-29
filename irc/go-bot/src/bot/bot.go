@@ -112,12 +112,3 @@ func (bot *Bot) MessageReceived(channel string, text string, sender *User, t tim
 func (b *Bot) IsAdmin(u *User) bool {
 	return inArray(u.Nick, b.admins)
 }
-
-func inArray(needle string, haystack []string) bool {
-	for _, a := range haystack {
-		if a == needle {
-			return true
-		}
-	}
-	return false
-}
