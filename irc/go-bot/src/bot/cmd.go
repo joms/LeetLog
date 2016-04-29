@@ -28,6 +28,7 @@ type Leet struct {
 	Time string
 	Status int
 	Channel string
+	EndpointKey string
 }
 
 // Command structure

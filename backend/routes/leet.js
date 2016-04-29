@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var config = require('../config');
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
@@ -66,6 +67,21 @@ router.route('/:from/:to').get(function(req,res){
             });
         }
     });
+});
+
+router.route('/').post(function(req,res){
+    if (config.endpointKey != req.body.EndpointKey) {
+        console.error("EndpointKey missmatch: "+req.body.EndpointKey +" vs "+ config.endpointKey +" from "+ req.connection.remoteAddress)
+
+        res.json({
+            success: false,
+            reason: "Something wrong happened"
+        });
+    } else {
+        res.json({
+            success: true
+        })
+    }
 });
 
 module.exports = router;

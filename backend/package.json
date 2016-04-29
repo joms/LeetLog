@@ -26,6 +26,6 @@
   "main": "Gruntfile.js",
   "scripts": {
     "start": "node ./server.js",
-    "develop": "nodemon --watch routes --watch server.js ./server.js --debug"
+    "develop": "nodemon --watch routes --watch server.js --watch config.js ./server.js --debug"
   }
 }

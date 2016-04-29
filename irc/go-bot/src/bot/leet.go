@@ -6,7 +6,7 @@ import (
 
 // We probably have a leet to deal with
 func (b *Bot) Leet(channel string, sender *User, msg string, t time.Time) *Leet {
-	leet := &Leet{User: sender, Channel: channel}
+	leet := &Leet{User: sender, Channel: channel, EndpointKey: b.EndpointKey}
 	leet.Time = t.Format("2006/01/02-15:04:05.999")
 
 	// Save time for prettier if-statements
