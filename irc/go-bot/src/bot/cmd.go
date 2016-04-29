@@ -27,7 +27,6 @@ type Leet struct {
 	User *User
 	Time string
 	Status int
-	Message string
 	Channel string
 }
 
