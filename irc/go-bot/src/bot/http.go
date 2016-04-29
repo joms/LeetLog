@@ -8,7 +8,7 @@ import (
 )
 
 // Send data to a given endpoint
-func (b *Bot) postData(url string, data []byte) {
+func (b *Bot) PostLeet(url string, data []byte) {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	req.Header.Set("Content-Type", "application/json")
 

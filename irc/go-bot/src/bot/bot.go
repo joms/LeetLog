@@ -162,7 +162,7 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 
 			fmt.Println(string(leetData))
 
-			b.postData(b.Endpoint, leetData)
+			b.PostLeet(b.Endpoint, leetData)
 		}
 	}
 }
