@@ -4,7 +4,7 @@ var config = require('../config');
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-    host: 'thorium.skriveleif.com:9200',
+    host: config.es.host,
     log: 'trace'
 });
 
