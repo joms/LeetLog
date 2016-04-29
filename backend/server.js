@@ -4,8 +4,6 @@ var app = express();
 
 var leet = require('./routes/leet.js');
 
-var endpointKey = "abc123";
-
 app.set('port', process.env.PORT || 8000);
 
 app.use(function (req, res, next) {
