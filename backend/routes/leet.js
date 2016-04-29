@@ -75,7 +75,7 @@ router.route('/').post(function(req,res){
 
         res.json({
             success: false,
-            reason: "Something wrong happened"
+            reason: "Something wrong happened. Check your settings"
         });
         return;
     }
