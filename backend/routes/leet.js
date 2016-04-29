@@ -71,7 +71,7 @@ router.route('/:from/:to').get(function(req,res){
 
 router.route('/').post(function(req,res){
     if (config.endpointKey != req.body.EndpointKey) {
-        console.error("EndpointKey missmatch: "+req.body.EndpointKey +" vs "+ config.endpointKey +" from "+ req.connection.remoteAddress)
+        console.error("EndpointKey missmatch: "+req.body.EndpointKey +" vs "+ config.endpointKey +" from "+ req.connection.remoteAddress);
 
         res.json({
             success: false,
