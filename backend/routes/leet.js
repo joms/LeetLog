@@ -77,11 +77,12 @@ router.route('/').post(function(req,res){
             success: false,
             reason: "Something wrong happened"
         });
-    } else {
-        res.json({
-            success: true
-        })
+        return;
     }
+
+    res.json({
+        success: true
+    })
 });
 
 module.exports = router;
