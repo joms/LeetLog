@@ -1,6 +1,11 @@
+var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 var config = require('../config');
+
+var file = fs.createWriteStream(config.logDestination , {
+    flags: 'a'
+});
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
@@ -79,6 +84,13 @@ router.route('/').post(function(req,res){
         });
         return;
     }
+
+    file.write(
+        req.body.Time +' '+
+        req.body.Channel +' '+
+        req.body.Status +' '+
+        req.body.User.Nick +'\n'
+    );
 
     res.json({
         success: true
