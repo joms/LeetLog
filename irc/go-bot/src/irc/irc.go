@@ -5,8 +5,6 @@ import (
 	"bot"
 	"log"
 	"time"
-
-	_ "commands/gif"
 )
 
 // Bot configuration
