@@ -61,60 +61,74 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 		switch command.Command {
 		// Hardcoded commands
 		case "join":
-			if ! b.IsAdmin(command.User) {
-				return
-			}
-
-			if msg == false {
-				return
-			}
-
 			if (len(command.Args) == 1) {
+				if ! b.IsAdmin(command.User) {
+					fmt.Printf("Insufficient permissions: %s tried to join %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				if msg == false {
+					fmt.Printf("Invalid command: %s tried to join %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				fmt.Printf("Success: %s joined %s\n", command.User.Nick, command.Args[0])
 				b.ircCon.Join(command.Args[0])
 			} else {
+				fmt.Printf("Missing parameters: %s tried to join nothing\n", command.User.Nick)
 				return
 			}
 
 		case "leave":
-			if ! b.IsAdmin(command.User) {
-				return
-			}
-
-			if msg == false {
-				return
-			}
-
 			if (len(command.Args) == 1) {
+				if ! b.IsAdmin(command.User) {
+					fmt.Printf("Insufficient permissions: %s tried to leave %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				if msg == false {
+					fmt.Printf("Invalid command: %s tried to leave %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				fmt.Printf("Success: %s left %s\n", command.User.Nick, command.Args[0])
 				b.ircCon.Part(command.Args[0])
 			} else {
+				fmt.Printf("Missing parameters: %s tried to leave nothing\n", command.User.Nick)
 				return
 			}
 
 		case "nick":
-			if ! b.IsAdmin(command.User) {
-				return
-			}
-
-			if msg == false {
-				return
-			}
-
 			if (len(command.Args) == 1) {
+				if ! b.IsAdmin(command.User) {
+					fmt.Printf("Insufficient permissions: %s tried to change nick to %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				if msg == false {
+					fmt.Printf("Invalid command: %s tried to change nick to %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				fmt.Printf("Success: %s changed nick to %s\n", command.User.Nick, command.Args[0])
 				b.ircCon.Nick(command.Args[0])
 			} else {
+				fmt.Printf("Missing parameters: %s tried to change nick to nothing\n", command.User.Nick)
 				return
 			}
 
 		case "set":
-			if ! b.IsAdmin(command.User) {
-				return
-			}
-
-			if msg == false {
-				return
-			}
-
 			if (len(command.Args) == 2) {
+				if ! b.IsAdmin(command.User) {
+					fmt.Printf("Insufficient permissions: %s tried to set %s to %s\n", command.User.Nick, command.Args[0], command.Args[1])
+					return
+				}
+
+				if msg == false {
+					fmt.Printf("Invalid command: %s tried to set %s to %s\n", command.User.Nick, command.Args[0], command.Args[1])
+					return
+				}
+
 				switch command.Args[0] {
 				case "endpointkey":
 					b.EndpointKey = command.Args[1]
@@ -122,18 +136,23 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				case "endpoint":
 					b.Endpoint = command.Args[1]
 				}
+			} else {
+				fmt.Printf("Missing parameters: %s tried to set something to nothing", command.User.Nick)
+				return
 			}
 
 		case "get":
-			if ! b.IsAdmin(command.User) {
-				return
-			}
-
-			if msg == false {
-				return
-			}
-
 			if (len(command.Args) == 1) {
+				if ! b.IsAdmin(command.User) {
+					fmt.Printf("Insufficient permissions: %s tried to get %s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
+				if msg == false {
+					fmt.Printf("Invalid command: %s tried to get%s\n", command.User.Nick, command.Args[0])
+					return
+				}
+
 				switch command.Args[0] {
 				case "endpointkey":
 					b.handlers.Response(channel, b.EndpointKey, sender)
@@ -141,18 +160,22 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				case "endpoint":
 					b.handlers.Response(channel, b.Endpoint, sender)
 				}
+
+				fmt.Printf("Success: %s got %s\n", command.User.Nick, command.Args[0])
 			} else {
+				fmt.Printf("Missing parameters: %s tried to get nothing from something", command.User.Nick)
 				return
 			}
 
-			return
-
 		default:
+			fmt.Printf("%s is not a special command. Running default handler", command.Command)
 			b.handleCmd(command)
 		}
 	} else {
 		// http://i.imgur.com/khRqBiC.gif
-		if (t.Hour() == 13 && t.Minute() >= 35 && t.Minute() <= 39) {
+		//if (t.Hour() == 13 && t.Minute() >= 35 && t.Minute() <= 39) {
+			fmt.Printf("Not a command, and leet is closing in")
+
 			leet := b.Leet(channel, sender, text, t)
 
 			leetData, err := json.Marshal(leet)
@@ -160,10 +183,11 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				fmt.Println(err)
 			}
 
+			fmt.Printf("Sending Leet to remote API at %s\n", b.Endpoint)
 			fmt.Println(string(leetData))
 
 			b.PostLeet(b.Endpoint, leetData)
-		}
+		//}
 	}
 }
 

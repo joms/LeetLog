@@ -5,6 +5,7 @@ import (
 	"bot"
 	"log"
 	"time"
+	"fmt"
 )
 
 // Bot configuration
@@ -26,6 +27,7 @@ var (
 func onWelcome(e *irc.Event) {
 	// Let's join some channels
 	for _, channel := range config.Channels {
+		fmt.Printf("Joining channel %s\n", channel)
 		ircConn.Join(channel)
 	}
 }

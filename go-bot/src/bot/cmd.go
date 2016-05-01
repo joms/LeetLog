@@ -71,10 +71,12 @@ func (b *Bot) handleCmd(c *Cmd) {
 	cmd := commands[c.Command]
 
 	if cmd.Admin == true && b.IsAdmin(c.User) == false {
+		fmt.Printf("Insufficient permissions: %s does not have the rights to run %v", c.User.Nick, c.Command)
 		return;
 	}
 
 	if cmd.Msg == true && c.User.Nick != c.Channel {
+		fmt.Printf("Invalid command: %v called by %s is required as message", c.Command, c.User.Nick)
 		return;
 	}
 
@@ -82,6 +84,8 @@ func (b *Bot) handleCmd(c *Cmd) {
 		log.Printf("Command not found %v", c.Command)
 		return
 	}
+
+	log.Printf("Running command %v called by %s", c.Command, c.User.Nick)
 
 	message, err := cmd.CmdFunc(c)
 	b.checkCmdError(err, c)
