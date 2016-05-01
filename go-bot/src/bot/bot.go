@@ -175,6 +175,17 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				return
 			}
 
+		case "admin":
+			if (len(command.Args == 2)) {
+				switch command.Args[0] {
+				case "remove":
+
+				case "add":
+				// If not exists, append to admins array
+				}
+
+			}
+
 		default:
 			fmt.Printf("%s is not a special command. Running default handler", command.Command)
 			b.handleCmd(command)
