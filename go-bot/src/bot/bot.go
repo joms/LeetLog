@@ -72,8 +72,10 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 					return
 				}
 
-				fmt.Printf("Success: %s joined %s\n", command.User.Nick, command.Args[0])
 				b.ircCon.Join(command.Args[0])
+
+				b.ircCon.Privmsgf(command.User.Nick, "Joined %s", command.Args[0])
+				fmt.Printf("Success: %s joined %s\n", command.User.Nick, command.Args[0])
 			} else {
 				fmt.Printf("Missing parameters: %s tried to join nothing\n", command.User.Nick)
 				return
@@ -91,8 +93,10 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 					return
 				}
 
-				fmt.Printf("Success: %s left %s\n", command.User.Nick, command.Args[0])
 				b.ircCon.Part(command.Args[0])
+
+				b.ircCon.Privmsgf(command.User.Nick, "Left %s", command.Args[0])
+				fmt.Printf("Success: %s left %s\n", command.User.Nick, command.Args[0])
 			} else {
 				fmt.Printf("Missing parameters: %s tried to leave nothing\n", command.User.Nick)
 				return
@@ -110,8 +114,9 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 					return
 				}
 
-				fmt.Printf("Success: %s changed nick to %s\n", command.User.Nick, command.Args[0])
 				b.ircCon.Nick(command.Args[0])
+				b.ircCon.Privmsgf(command.User.Nick, "Changed nick to %s", command.Args[0])
+				fmt.Printf("Success: %s changed nick to %s\n", command.User.Nick, command.Args[0])
 			} else {
 				fmt.Printf("Missing parameters: %s tried to change nick to nothing\n", command.User.Nick)
 				return
@@ -136,6 +141,9 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				case "endpoint":
 					b.Endpoint = command.Args[1]
 				}
+
+				b.ircCon.Privmsgf(command.User.Nick, "Successfully set %s to %s\n", command.Args[0], command.Args[1])
+				fmt.Printf("Success: %s set %s to %s\n", command.User.Nick, command.Args[0], command.Args[1])
 			} else {
 				fmt.Printf("Missing parameters: %s tried to set something to nothing", command.User.Nick)
 				return
