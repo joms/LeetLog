@@ -3,6 +3,8 @@ package main
 import(
 	"irc"
 	"strings"
+
+	_ "commands/top"
 )
 
 // Set up and run our IRC connection
