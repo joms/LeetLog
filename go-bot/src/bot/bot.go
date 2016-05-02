@@ -189,8 +189,8 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 						return
 					}
 
-					for i, a := range b.admins {
-						if a == command.Args[1] {
+					for i, admin := range b.admins {
+						if admin == command.Args[1] {
 
 							b.admins = b.admins[:i+copy(b.admins[i:], b.admins[i+1:])]
 
@@ -213,8 +213,8 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 						return
 					}
 
-					for _, a := range b.admins {
-						if a == command.Args[1] {
+					for _, admin := range b.admins {
+						if admin == command.Args[1] {
 							return
 						}
 					}
