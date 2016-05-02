@@ -176,18 +176,60 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 			}
 
 		case "admin":
-			if (len(command.Args == 2)) {
+			if (len(command.Args) == 2) {
 				switch command.Args[0] {
 				case "remove":
+					if ! b.IsAdmin(command.User) {
+						fmt.Printf("Insufficient permissions: %s tried to remove %s from admins\n", command.User.Nick, command.Args[1])
+						return
+					}
+
+					if msg == false {
+						fmt.Printf("Invalid command: %s tried to remove %s from admins\n", command.User.Nick, command.Args[1])
+						return
+					}
+
+					for i, a := range b.admins {
+						if a == command.Args[1] {
+
+							b.admins = b.admins[:i+copy(b.admins[i:], b.admins[i+1:])]
+
+							b.ircCon.Privmsgf(command.User.Nick, "Removed %s from admins", command.Args[1])
+							b.ircCon.Privmsgf(command.Args[1], "You were removed from the admin list by %s", command.User.Nick)
+							fmt.Printf("Success: %s removed %s from admins\n", command.User.Nick, command.Args[1])
+
+							return
+						}
+					}
 
 				case "add":
-				// If not exists, append to admins array
-				}
+					if ! b.IsAdmin(command.User) {
+						fmt.Printf("Insufficient permissions: %s tried to add %s to admins\n", command.User.Nick, command.Args[1])
+						return
+					}
 
+					if msg == false {
+						fmt.Printf("Invalid command: %s tried to add %s to admins\n", command.User.Nick, command.Args[1])
+						return
+					}
+
+					for _, a := range b.admins {
+						if a == command.Args[1] {
+							return
+						}
+					}
+
+					b.admins = append(b.admins, command.Args[1])
+					b.ircCon.Privmsgf(command.User.Nick, "Added %s to admins", command.Args[1])
+					b.ircCon.Privmsgf(command.Args[1], "You're added to the admin list by %s", command.User.Nick)
+					fmt.Printf("Success: %s added %s to admins\n", command.User.Nick, command.Args[1])
+				}
+			} else {
+				fmt.Printf("Missing parameters: %s tried to run an admin command\n", command.User.Nick)
 			}
 
 		default:
-			fmt.Printf("%s is not a special command. Running default handler", command.Command)
+			fmt.Printf("%s is not a special command. Running default handler\n", command.Command)
 			b.handleCmd(command)
 		}
 	} else {
