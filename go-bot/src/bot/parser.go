@@ -19,7 +19,8 @@ func (b *Bot) Parse(s string, channel string, user *User, msg bool) *Cmd {
 
 	c.Channel = strings.TrimSpace(channel)
 	c.User = user
-
+	c.APIEndpoint = b.APIEndpoint
+	c.APIEndpointKey = b.APIEndpointKey
 
 	// Trim the prefix and extra spaces
 	c.Message = strings.TrimPrefix(s, b.CmdPrefix)

@@ -9,13 +9,13 @@ import (
 
 // Bot handles the bot instance
 type Bot struct {
-	handlers *Handlers
-	admins []string
-	ircCon *irc.Connection
-	CmdPrefix string
-	LeetPrefix []string
-	Endpoint string
-	EndpointKey string
+	handlers       *Handlers
+	admins         []string
+	ircCon         *irc.Connection
+	CmdPrefix      string
+	LeetPrefix     []string
+	APIEndpoint    string
+	APIEndpointKey string
 }
 
 // ResponseHandler must be implemented by the protocol to handle the bot responses
@@ -34,8 +34,8 @@ func New(h *Handlers, a []string, i *irc.Connection) *Bot {
 		ircCon: i,
 		CmdPrefix: "&",
 		LeetPrefix: []string{" ", "^"},
-		Endpoint: "http://localhost:8000/api/leet",
-		EndpointKey: "abc123", // This key MUST correspond on your server
+		APIEndpoint: "http://localhost:8000/api/leet",
+		APIEndpointKey: "abc123", // This key MUST correspond on your server
 	}
 	return b
 }
@@ -136,10 +136,10 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 
 				switch command.Args[0] {
 				case "endpointkey":
-					b.EndpointKey = command.Args[1]
+					b.APIEndpointKey = command.Args[1]
 
 				case "endpoint":
-					b.Endpoint = command.Args[1]
+					b.APIEndpoint = command.Args[1]
 				}
 
 				b.ircCon.Privmsgf(command.User.Nick, "Successfully set %s to %s\n", command.Args[0], command.Args[1])
@@ -163,10 +163,10 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 
 				switch command.Args[0] {
 				case "endpointkey":
-					b.handlers.Response(channel, b.EndpointKey, sender)
+					b.handlers.Response(channel, b.APIEndpointKey, sender)
 
 				case "endpoint":
-					b.handlers.Response(channel, b.Endpoint, sender)
+					b.handlers.Response(channel, b.APIEndpoint, sender)
 				}
 
 				fmt.Printf("Success: %s got %s\n", command.User.Nick, command.Args[0])
@@ -244,10 +244,10 @@ func (b *Bot) MessageReceived(channel string, text string, sender *User, t time.
 				fmt.Println(err)
 			}
 
-			fmt.Printf("Sending Leet to remote API at %s\n", b.Endpoint)
+			fmt.Printf("Sending Leet to remote API at %s\n", b.APIEndpoint)
 			fmt.Println(string(leetData))
 
-			b.PostLeet(b.Endpoint, leetData)
+			b.PostLeet(b.APIEndpoint, leetData)
 		//}
 	}
 }

@@ -14,6 +14,8 @@ type Cmd struct {
 	Command string
 	RawArgs string
 	Args []string
+	APIEndpoint string
+	APIEndpointKey string
 }
 
 // User structure
