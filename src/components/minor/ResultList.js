@@ -1,6 +1,6 @@
 import React from 'react';
 
-import List from 'material-ui/lib/lists/list';
+import List from 'material-ui/List';
 import ResultListItem from './resultlistitem';
 
 var ResultList = React.createClass({

@@ -1,5 +1,5 @@
 import React from 'react';
-import AppBar from '../../../node_modules/material-ui/lib/app-bar';
+import AppBar from '../../../node_modules/material-ui/AppBar';
 
 const style={
     "marginBottom" : "25px"

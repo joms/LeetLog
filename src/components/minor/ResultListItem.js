@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Badge from 'material-ui/lib/badge';
-import ListItem from 'material-ui/lib/lists/list-item';
-import FontIcon from 'material-ui/lib/font-icon';
+import Badge from 'material-ui/Badge';
+import ListItem from 'material-ui/List/ListItem';
+import FontIcon from 'material-ui/FontIcon';
 
 function addZ(n){return n < 10 ? '0'+n : ''+n;}
 function addZ2(n){return n < 100 ? '0'+n : ''+n;}
